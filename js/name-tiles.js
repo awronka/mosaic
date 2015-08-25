@@ -1,0 +1,1 @@
+$(this).removeClass('MosaicDOMRevealerHoverState');

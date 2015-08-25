@@ -1,0 +1,14 @@
+{
+  "name": "Mosaic",
+  "version": "1.0.0",
+  "description": "Extension to reveal DOM structure",
+  "main": "manifest.json",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^2.1.4"
+  }
+}
