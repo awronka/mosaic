@@ -3,7 +3,7 @@ var affectedDomElements = document.getElementBy
 
 if (flag) {
 	// If a flag is found when the button is pressed, it means disable
-	$('body *').find('.MosaicDOMRevealerHoverStateFlag').remove();
+	$('.MosaicDOMRevealerHoverStateFlag').remove()
 } else {
 	// If no flags are found, we're activing mosaic
 	// console.log('hey')
