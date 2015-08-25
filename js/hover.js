@@ -23,9 +23,9 @@ $('body *').hover(
 			// Construct Flag
 			element = "<div class='MosaicDOMRevealerHoverStateFlag'>";
 			element = element + "Type: " + event.target.nodeName + "<br>";
-			if (thisId) element = element + "Id:" + thisId;
+			if (thisId) element = element + "Id: " + thisId;
 			if (thisId && thisClass) element = element + "<br>";
-			if (thisClass && thisClass != "") element = element + "Classes:" + thisClass;
+			if (thisClass && thisClass != "") element = element + "Classes: " + thisClass;
 			element = element + "</div>"
 
 			// Append Flag

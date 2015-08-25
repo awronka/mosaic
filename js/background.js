@@ -2,11 +2,11 @@
 var enabled = false;
 function updateIcon() {
 	if (!enabled) {
-		chrome.browserAction.setIcon({path: "images/mosaic-19-active.png"});
+		chrome.browserAction.setIcon({path: "images/19-active.png"});
 		enabled = true;
 
 	} else {
-		chrome.browserAction.setIcon({path: "images/mosaic-19-inactive.png"});
+		chrome.browserAction.setIcon({path: "images/19-inactive.png"});
 		enabled = false;
 	}
 }
