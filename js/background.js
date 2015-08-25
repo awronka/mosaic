@@ -10,9 +10,10 @@ function updateIcon() {
 		enabled = false;
 	}
 }
-chrome.browserAction.onClicked.addListener(function(tab) {
+chrome.browserAction.onClicked.addListener(function (tab) {
 	updateIcon();
 	chrome.tabs.executeScript(tab.id, {file: "node_modules/jquery/dist/jquery.min.js"});
+	chrome.tabs.executeScript(tab.id, {file: "jquery-ui.bundle.js"});
 	chrome.tabs.executeScript(tab.id, {file: "js/outlines.js"});
 	chrome.tabs.executeScript(tab.id, {file: "js/hover.js"});
 	chrome.tabs.executeScript(tab.id, {file:"js/name-flags.js"});
