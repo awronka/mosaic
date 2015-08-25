@@ -2,12 +2,11 @@
 var enabled = false;
 function updateIcon() {
 	if (!enabled) {
-		chrome.browserAction.setIcon({path:"images/mosaic-19-active.png"});
+		chrome.browserAction.setIcon({path: "images/mosaic-19-active.png"});
 		enabled = true;
 
 	} else {
-		chrome.browserAction.setIcon({path:"images/mosaic-19-inactive.png"});
-		// chrome.tabs.executeScript(null, {code:"document.body.style.backgroundColor='green'"});
+		chrome.browserAction.setIcon({path: "images/mosaic-19-inactive.png"});
 		enabled = false;
 	}
 }
@@ -16,7 +15,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 	chrome.tabs.executeScript(tab.id, {file: "node_modules/jquery/dist/jquery.min.js"});
 	chrome.tabs.executeScript(tab.id, {file: "js/outlines.js"});
 	chrome.tabs.executeScript(tab.id, {file: "js/hover.js"});
-	// chrome.tabs.executeScript(tab.id, {file:"js/name-tiles.js"});
+	chrome.tabs.executeScript(tab.id, {file:"js/name-flags.js"});
 });
 
 

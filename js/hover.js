@@ -16,19 +16,21 @@ $('body *').hover(
 			if ($(this).attr("id") !== undefined) var thisId = $(this).attr("id").split(" ").filter(filterAttributes);
 
 			// Construct Flag
-			element = "<div id='MosaicDOMRevealerHoverStateFlag'>";
+			element = "<div class='MosaicDOMRevealerHoverStateFlag'>";
 			if (thisId) element = element + "Id:" + thisId;
 			if (thisId && thisClass) element = element + " ";
 			if (thisClass && thisClass != "") element = element + "Classes:" + thisClass;
 			element = element + "</div>"
 
-			$(this).append(element);
+			// Append Flag
+			$(this).prepend(element);
+			// $(element).appendTo(this);
 
-			// Mosaic
+			// Mosaic Hover
 			$(this).addClass('MosaicDOMRevealerHoverState');
-		} else {
-			$('#MosaicDOMRevealerHoverStateFlag').remove();
 		}
 	},
 	function() {
+		// $(this).remove(element);
+		$(this).removeClass('MosaicDOMRevealerHoverState');
 	});
