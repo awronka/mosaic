@@ -7,8 +7,7 @@
 
 	"browser_action": {
 		"default_icon": {
-			"19": "images/19-inactive.png",
-			"38": "images/38-inactive.png"
+			"38": "images/38-active.png"
 		},
 		"default_title": "Reveal DOM"
 	},
@@ -17,12 +16,20 @@
 		"css/overlay.css"
 	],
 
+	"content_scripts": [
+		{
+			"matches": ["http://*/*", "https://*/*"],
+			"js": [/*"node_modules/jquery/dist/jquery.min.js",*/"js/content.js"]
+		}
+	],
+
 	"background": {
-		"scripts": ["js/background.js"],
-		"persistent": false
+		"scripts": [/*"node_modules/jquery/dist/jquery.min.js",*/"js/background.js"]
 	},
 
 	"permissions": [
-		"activeTab"
+		"tabs",
+		"activeTab",
+		"webNavigation"
 	]
 }

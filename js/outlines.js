@@ -25,7 +25,7 @@ if (style) {
 			z-index: 10000; \
 			width: auto; \
 			padding: 4px; \
-			background-color: rgba(24, 24, 24, 1); \
+			background-color: rgba(24, 24, 24, .5); \
 			color: white; \
 			font-size: 8px; \
 			font-weight: bold; \
