@@ -1,5 +1,5 @@
 var flag = document.getElementsByClassName('MosaicDOMRevealerHoverStateFlag');
-var affectedDomElements = document.getElementBy
+var affectedDomElements = document.getElementBy	
 
 if (flag) {
 	// If a flag is found when the button is pressed, it means disable
