@@ -13,6 +13,6 @@ I need to refactor because I didn't quite understand the content-to-browser scri
 
 
 ## To Try it Out
-1) Clone the repo, go to it, and npm install
-2) Go to Chrome's settings/preferences and in the left sidebar, select "Extensions"
-3) Enable "Developer Mode" and click the "Load unpacked Extension.." where you select the cloned repo folder!
+1. Clone the repo, go to it, and npm install
+2. Go to Chrome's settings/preferences and in the left sidebar, select "Extensions"
+3. Enable "Developer Mode" and click the "Load unpacked Extension.." where you select the cloned repo folder!
