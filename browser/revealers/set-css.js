@@ -3,6 +3,7 @@ var style = document.getElementById(overlay_id);
 // var cssSheet = require("css/overlay.css");
 
 if (style) {
+	// If our style element exists when button is clicked, remove it
 	document.head.removeChild(document.getElementById(overlay_id));
 } else {
 	style = document.createElement('style');
@@ -29,7 +30,12 @@ if (style) {
 			color: white; \
 			font-size: 8px; \
 			font-weight: bold; \
-		}'
-		,
+			text-align: left; \
+		}',
 		2);
+	style.sheet.insertRule(
+		'.MosaicDOMRevealerEventState { \
+			background-color: rgba(200, 24, 24, .8); \
+		}',
+		3);
 }

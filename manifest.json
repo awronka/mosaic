@@ -19,17 +19,19 @@
 	"content_scripts": [
 		{
 			"matches": ["http://*/*", "https://*/*"],
-			"js": [/*"node_modules/jquery/dist/jquery.min.js",*/"js/content.js"]
+			"js": ["node_modules/jquery/dist/jquery.min.js"]
 		}
 	],
 
 	"background": {
-		"scripts": [/*"node_modules/jquery/dist/jquery.min.js",*/"js/background.js"]
+		"scripts": ["browser/background.js"]
 	},
 
 	"permissions": [
-		"tabs",
 		"activeTab",
-		"webNavigation"
+		"tabs",
+		"webNavigation",
+		"clipboardWrite",
+		"storage"
 	]
 }
