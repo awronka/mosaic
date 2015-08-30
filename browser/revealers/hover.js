@@ -7,15 +7,15 @@ var filterAttributes = function(tag) {
 		return true;
 	}
 }
+var parentHolder = null;
 $('body *').hover(
 	function(event) {
-		// Since passing variables back and forth is a bit weird, starting off just checking for the stylesheet adjustment
+		// Since passing variables back and forth is a bit weird, starting off just checking for the stylesheet for hovers is active
 		if (document.getElementById(overlay_id)){
 
 			/*-------------------
 			// THIS
 			/-------------------*/
-
 			// Get Attributes
 			if ($(this).attr("class") !== undefined) var thisClass = $(this).attr("class").split(" ").filter(filterAttributes);
 			if ($(this).attr("id") !== undefined) var thisId = $(this).attr("id").split(" ").filter(filterAttributes);
@@ -30,7 +30,6 @@ $('body *').hover(
 
 			// Append Flag
 			$(this).prepend(element);
-			// $(element).appendTo(this);
 
 			// Mosaic Hover
 			$(this).addClass('MosaicDOMRevealerHoverState');
@@ -38,6 +37,7 @@ $('body *').hover(
 			/*-------------------
 			// Parents
 			/-------------------*/
+			// parentHolder = $(this).parent();
 			$(this)
 				.parentsUntil('body')
 					.addClass("MosaicDOMRevealerHoverState");
@@ -45,10 +45,7 @@ $('body *').hover(
 		}
 	},
 	function(event) {
-		// $(this).remove(element);
+		// If there is a shared parent, don't remove?
 		$(this).removeClass('MosaicDOMRevealerHoverState');
-		$('.MosaicDOMRevealerHoverStateFlag').remove()
-		// $(this)
-		// 	.parentsUntil('body',".MosaicDOMRevealerHoverStateFlag")
-		// 		.removeClass("MosaicDOMRevealerHoverStateFlag");
+		$('.MosaicDOMRevealerHoverStateFlag').remove();
 	});
