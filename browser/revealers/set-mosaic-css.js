@@ -16,10 +16,16 @@ if (style) {
 		}',
 		0);
 	style.sheet.insertRule(
+		'a { \
+			background-color: rgba(24, 24, 200, .1); \
+			outline: 1px solid rgba(30, 30, 200, .2); \
+		}',
+		1);
+	style.sheet.insertRule(
 		'.MosaicDOMRevealerHoverState { \
 			outline: 2px solid rgba(24, 24, 24, .8); \
 		}',
-		1);
+		2);
 	style.sheet.insertRule(
 		'.MosaicDOMRevealerHoverStateFlag { \
 			position: absolute; \
@@ -31,11 +37,13 @@ if (style) {
 			font-size: 8px; \
 			font-weight: bold; \
 			text-align: left; \
+			font-family: Helvetica, Arial, Sans-Serif; \
 		}',
-		2);
+		3);
 	style.sheet.insertRule(
 		'.MosaicDOMRevealerEventState { \
 			background-color: rgba(200, 24, 24, .8); \
+			outline: 1px solid rgba(200, 30, 30, .8); \
 		}',
-		3);
+		4);
 }
