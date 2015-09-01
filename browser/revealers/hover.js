@@ -94,7 +94,6 @@ $('body *').hover(
 								$(e.target).parent().parent().children('ol').append("<li>" + inputVal + "</li>");
 
 								// Get path and POST request
-								alert('at get path');
 								var parentPath = [];
 								$(this).parents().not('html').each(function(){
 									var entry = this.tagName.toLowerCase();
