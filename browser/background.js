@@ -13,17 +13,27 @@ Popup
 3- from menu are a few actions, one of which is to reset all
 ----------------*/
 
+/*---------------
+MOSAIC DATA
+-----------------*/
 var MOSAICDATA = {};
-
+var dbUrl = "http://localhost:3333/"
 var updatePageComments = function(tab){
 	console.log('MOSAICDATA: ', MOSAICDATA);
 	console.log('Tab URL: ', tab.url);
 	MOSAICDATA[tab.url] = [];
+	// Test DB GET
+	$.get(dbUrl + 'api/page', {url: tab.url})
+		.done(function(data) {
+			MOSAICDATA[tab.url] = data.comments;
+		})
+
 	console.log('MOSAICDATA: ', MOSAICDATA);
 }
 
-
-// Upon tab switch
+/*---------------
+TAB SWITCHING
+-----------------*/
 chrome.tabs.onActivated.addListener(function(event) {
 	// Change Icon
 	chrome.tabs.executeScript(event.id, {file: "browser/sense-state.js"}, function(result) {
@@ -33,25 +43,32 @@ chrome.tabs.onActivated.addListener(function(event) {
 			chrome.browserAction.setIcon({path: "images/38-inactive.png"});
 		}
 	});
-	// Make a GET for comments
 	chrome.tabs.get(event.tabId, function(tab) {
+		// Make a GET for comments
 		updatePageComments(tab);
 	});
 });
 
-// Upon tab update
+/*---------------
+TAB UPDATES
+-----------------*/
 chrome.tabs.onUpdated.addListener(function(tabId, changedInfo, tab) {
 	// Make a GET for comments
 	updatePageComments(tab);
 });
 
-// Browser Action Listener
+
+/*---------------
+BROWSER ACTION
+-----------------*/
 chrome.browserAction.onClicked.addListener(function (tab) {
 	chrome.browserAction.setPopup({popup: 'browser/popup/popup.html'});
 	
 });
 
-// Messaging Listener
+/*---------------
+MESSAGES
+-----------------*/
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		// Toggle Grid
@@ -63,6 +80,8 @@ chrome.runtime.onMessage.addListener(
 				chrome.tabs.executeScript(tab, {file: "browser/revealers/event-outlines.js"});
 				chrome.tabs.executeScript(tab, {file: "browser/revealers/hover.js"});
 				chrome.tabs.executeScript(tab, {file: "browser/revealers/remove-name-flags.js"});
+				// Comments
+				chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"});
 				// Icon
 				chrome.tabs.executeScript(tab, {file: "browser/sense-state.js"}, function(result){
 					if (result[0]){ chrome.browserAction.setIcon({path: "images/38-active.png"});
@@ -78,6 +97,30 @@ chrome.runtime.onMessage.addListener(
 		if (request.action === "addComment"){
 			sendResponse({status: "RECIEVED: Comment Added"})
 		}
+		// Show/Hide Comments
+		if (request.action === "toggleCommentVisibility"){
+			// Get Current Tab
+			chrome.tabs.getCurrent(function(tab){
+				// Non-CSS Method
+				
+				chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"}, function(result){
+					sendResponse({status: "RECIEVED: Comments Visibility Changed", visibility: result});
+				});
+
+				// CSS-Visibility Method
+				// if (!request.visible){
+				// 	// $('.MosaicDomRevealerCommentFlag').css("visibility","visible");			
+				// 	chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"});
+				// 	sendResponse({status: "RECIEVED: Comments Visible", bool: true});
+				// } else {
+				// 	// $('.MosaicDomRevealerCommentFlag').css("visibility","hidden");			
+				// 	// chrome.tabs.insertCSS(function(tab, ".MosaicDomRevealerCommentFlag{visibility:hidden;}"));
+				// 	chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"});
+				// 	sendResponse({status: "RECIEVED: Comments Hidden", bool: false});
+				// }
+			});
+		}
+
 	});
 
 

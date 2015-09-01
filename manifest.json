@@ -25,7 +25,7 @@
 	],
 
 	"background": {
-		"scripts": ["browser/background.js"]
+		"scripts": ["node_modules/jquery/dist/jquery.min.js", "browser/background.js"]
 	},
 
 	"permissions": [

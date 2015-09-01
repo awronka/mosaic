@@ -5,8 +5,8 @@ var User = mongoose.model('User');
 var Page = mongoose.model('Page');
 var Comment = mongoose.model('Comment');
 
-router.get('/', function (req, res, next) {
-	console.log('hey');
+router.post('/', function (req, res, next) {
+	// Comment.create(req.body)
 });
 
 module.exports = router;

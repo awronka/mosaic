@@ -38,6 +38,7 @@ if (style) {
 			font-weight: bold; \
 			text-align: left; \
 			font-family: Helvetica, Arial, Sans-Serif; \
+			outline: none; \
 		}',
 		3);
 	style.sheet.insertRule(
@@ -46,4 +47,19 @@ if (style) {
 			outline: 1px solid rgba(200, 30, 30, .8); \
 		}',
 		4);
+	style.sheet.insertRule(
+		'.MosaicDomRevealerCommentFlag { \
+			position: absolute; \
+			z-index: 10000; \
+			width: 200px; \
+			padding: 4px; \
+			background-color: rgba(24, 200, 24, .5); \
+			color: black; \
+			font-size: 8px; \
+			font-weight: bold; \
+			text-align: left; \
+			font-family: Helvetica, Arial, Sans-Serif; \
+			outline: none; \
+		}',
+		5);
 }
