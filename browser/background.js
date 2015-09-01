@@ -51,22 +51,41 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 });
 
 /*---------------
-MESSAGES
+MESSAGES LISTENER
 -----------------*/
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 
-		// Toggle Grid
+		/*---------------
+		ML - GET MOSAIC DATA
+		-----------------*/
+		if (request.action === "getMosaicData") {
+			console.log("GOT REQUEST FOR MOSAIC DATA")
+			// Get Tab
+			chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+				// Make Get
+				$.get(dbUrl + 'api/page', {url: tabs[0].url})
+					.done(function(data) {
+						console.log('RETURNED DATA: ', data);
+						// Send Back Information
+						sendResponse({ status: "Mosaic Data Sent", data: data });
+					});
+			});
+		}
+
+		/*---------------
+		ML - TOGGLE GRID
+		-----------------*/
 		if (request.action === "toggleGrid") {
 			// Run deactivating scripts
 			chrome.tabs.getCurrent(function(tab){
+				// Comments
+				chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"});
 				// Grids
 				chrome.tabs.executeScript(tab, {file: "browser/revealers/set-mosaic-css.js"});
 				chrome.tabs.executeScript(tab, {file: "browser/revealers/event-outlines.js"});
 				chrome.tabs.executeScript(tab, {file: "browser/revealers/hover.js"});
 				chrome.tabs.executeScript(tab, {file: "browser/revealers/remove-name-flags.js"});
-				// Comments
-				chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"});
 				// Icon
 				chrome.tabs.executeScript(tab, {file: "browser/sense-state.js"}, function(result){
 					if (result[0]){ chrome.browserAction.setIcon({path: "images/38-active.png"});
@@ -79,8 +98,10 @@ chrome.runtime.onMessage.addListener(
 			});
 		}
 
-		// Add Comment
-		if (request.action === "addComment"){
+		/*---------------
+		ML - ADD COMMENT
+		-----------------*/
+		if (request.action === "addComment") {
 			// chrome.tabs.getCurrent(function(tab){
 			chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
 				var url = tabs[0].url,
@@ -96,8 +117,10 @@ chrome.runtime.onMessage.addListener(
 			});
 		}
 
-		// Show/Hide Comments
-		if (request.action === "toggleCommentVisibility"){
+		/*---------------
+		ML - SHOW/HIDE COMMENTS
+		-----------------*/
+		if (request.action === "toggleCommentVisibility") {
 			// Get Current Tab
 			chrome.tabs.getCurrent(function(tab){
 				// Run Comment Visiblity Content-Script
@@ -107,4 +130,29 @@ chrome.runtime.onMessage.addListener(
 			});
 		}
 
+		/*---------------
+		ML - DELETE PAGE COMMENTS
+		-----------------*/
+		if (request.action === "deleteAllComments") {
+			chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+				var page = tabs[0].url;
+				$.ajax({
+					url: dbUrl + 'api/page/comments',
+					type: 'DELETE',
+					data: {page: page}
+				}).done(function(response){
+					console.log('COMMENTS DELETED: ', response);
+					chrome.tabs.getCurrent(function(tab){
+						// Run Comment Visiblity Content-Script
+						chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"}, function(result){
+							sendResponse({status: "RECIEVED: Comments Visibility Changed", visibility: result});
+						});
+					});
+				})
+				sendResponse({status: "RECIEVED: Comments Deleted"})
+			});
+		}
+
+		// Lets chrome know that async work is being done and to keep the listener going till a sendResponse happens
+		return true;
 	});

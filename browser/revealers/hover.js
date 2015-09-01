@@ -21,10 +21,6 @@ var collapseEventCalls = function(target) {
 		return false;
 	}
 }
-// Comment Submission
-var submitComment = function(){
-
-}
 
 /*---------------
 ELEMENT HOVER SETTINGS

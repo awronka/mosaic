@@ -4,6 +4,9 @@ var mongoose = require('mongoose');
 var Page = mongoose.model('Page');
 var Comment = mongoose.model('Comment');
 
+/*---------------
+POST A COMMENT
+-----------------*/
 router.post('/', function (req, res, next) {
 	// Create Comment
 	Comment.create({path: req.body.path, comment: req.body.input})
