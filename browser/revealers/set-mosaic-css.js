@@ -48,18 +48,31 @@ if (style) {
 		}',
 		4);
 	style.sheet.insertRule(
-		'.MosaicDomRevealerCommentFlag { \
+		'.MosaicDOMRevealerCommentFlag { \
 			position: absolute; \
 			z-index: 10000; \
 			width: 200px; \
 			padding: 4px; \
-			background-color: rgba(24, 200, 24, .5); \
+			background-color: rgba(245, 245, 245, .95); \
 			color: black; \
 			font-size: 8px; \
 			font-weight: bold; \
 			text-align: left; \
 			font-family: Helvetica, Arial, Sans-Serif; \
-			outline: none; \
+			line-height: 1.35; \
 		}',
 		5);
+	style.sheet.insertRule(
+		'.MosaicDOMRevealerCommentFlag * { \
+			margin: 0px; \
+			outline: none; \
+		}',
+		6);
+	style.sheet.insertRule(
+		'.MosaicDOMRevealerCommentFlag ol { \
+			outline: none; \
+			padding: 0; \
+			padding-left: 16px; \
+		}',
+		7);
 }

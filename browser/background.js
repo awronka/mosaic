@@ -1,33 +1,18 @@
 /*---------------
-BREAKDOWN
-Managing state associated with each tab, we're going to change how the browser action and popup are interacted with
------------------
-1- Handle Messages
-2- Store tab info
-3- Make db calls
------------------
-Popup
------------------
-1- activate on first click
-2- all clicks following the first opens popup
-3- from menu are a few actions, one of which is to reset all
-----------------*/
-
-/*---------------
 MOSAIC DATA
 -----------------*/
 var MOSAICDATA = {};
+
 var dbUrl = "http://localhost:3333/"
+
 var updatePageComments = function(tab){
-	console.log('MOSAICDATA: ', MOSAICDATA);
-	console.log('Tab URL: ', tab.url);
-	MOSAICDATA[tab.url] = [];
-	// Test DB GET
+	if (!MOSAICDATA[tab.url]) MOSAICDATA[tab.url] = [];
+	// Get Page
 	$.get(dbUrl + 'api/page', {url: tab.url})
 		.done(function(data) {
+			// console.log('RETURNED DATA: ', data);
 			MOSAICDATA[tab.url] = data.comments;
 		})
-
 	console.log('MOSAICDATA: ', MOSAICDATA);
 }
 
@@ -37,7 +22,7 @@ TAB SWITCHING
 chrome.tabs.onActivated.addListener(function(event) {
 	// Change Icon
 	chrome.tabs.executeScript(event.id, {file: "browser/sense-state.js"}, function(result) {
-		console.log('Mosaic Activate: ',result[0]); // Returns an array, in this case with a length of 1 because I specified the tab to inspect
+		// console.log('Mosaic Activate: ',result[0]); // Returns an array, in this case with a length of 1 because I specified the tab to inspect
 		if (result[0] === true) { chrome.browserAction.setIcon({path: "images/38-active.png"});
 		} else {
 			chrome.browserAction.setIcon({path: "images/38-inactive.png"});
@@ -62,8 +47,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changedInfo, tab) {
 BROWSER ACTION
 -----------------*/
 chrome.browserAction.onClicked.addListener(function (tab) {
-	chrome.browserAction.setPopup({popup: 'browser/popup/popup.html'});
-	
+	chrome.browserAction.setPopup({popup: 'browser/popup/popup.html'});	
 });
 
 /*---------------
@@ -71,6 +55,7 @@ MESSAGES
 -----------------*/
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
+
 		// Toggle Grid
 		if (request.action === "toggleGrid") {
 			// Run deactivating scripts
@@ -93,54 +78,33 @@ chrome.runtime.onMessage.addListener(
 				sendResponse({status: "RECIEVED: Mosaic state toggled"});
 			});
 		}
+
 		// Add Comment
 		if (request.action === "addComment"){
-			sendResponse({status: "RECIEVED: Comment Added"})
+			// chrome.tabs.getCurrent(function(tab){
+			chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+				var url = tabs[0].url,
+					path = request.path,
+					input = request.input;
+
+				$.post(dbUrl + 'api/comment', {url: url, path: path, input: input})
+					.done(function(data){
+						console.log('COMMENT POSTED: ', data);
+					})
+
+				sendResponse({status: "RECIEVED: Comment Added"})
+			});
 		}
+
 		// Show/Hide Comments
 		if (request.action === "toggleCommentVisibility"){
 			// Get Current Tab
 			chrome.tabs.getCurrent(function(tab){
-				// Non-CSS Method
-				
+				// Run Comment Visiblity Content-Script
 				chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"}, function(result){
 					sendResponse({status: "RECIEVED: Comments Visibility Changed", visibility: result});
 				});
-
-				// CSS-Visibility Method
-				// if (!request.visible){
-				// 	// $('.MosaicDomRevealerCommentFlag').css("visibility","visible");			
-				// 	chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"});
-				// 	sendResponse({status: "RECIEVED: Comments Visible", bool: true});
-				// } else {
-				// 	// $('.MosaicDomRevealerCommentFlag').css("visibility","hidden");			
-				// 	// chrome.tabs.insertCSS(function(tab, ".MosaicDomRevealerCommentFlag{visibility:hidden;}"));
-				// 	chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"});
-				// 	sendResponse({status: "RECIEVED: Comments Hidden", bool: false});
-				// }
 			});
 		}
 
 	});
-
-
-
-
-
-
-
-
-
-// local  = [
-// 	tab.id = {
-// 		MosaicState: false,
-// 		page: [{
-// 			url: String, 
-// 			comments: [{
-// 				path: String,
-// 				comment: String,
-// 				author: String
-// 			}]
-// 		}]
-// 	}
-// 	]
