@@ -4,10 +4,10 @@ var mongoose = require('mongoose');
 var Page = mongoose.model('Page');
 var Comment = mongoose.model('Comment');
 
-router.get('/', function (req, res, next) {
-
-	console.log('Hit Page Router');
-	
+/*---------------
+GET or CREATE PAGE
+-----------------*/
+router.get('/', function (req, res, next) {	
 	Page.findOne({url: req.query.url}).exec() 	//Find a page with matching url
 	.then(function(doc){
 
@@ -31,6 +31,16 @@ router.get('/', function (req, res, next) {
 		}
 	});
 
+});
+
+/*---------------
+DELETE PAGE COMMENTS
+-----------------*/
+router.delete('/comments', function (req, res, next) {
+	Page.findOneAndUpdate({url: req.body.page}, {comments: []}, {upsert: true, 'new': true}).exec()
+	.then(function(Page){
+		res.send(Page);
+	});
 });
 
 module.exports = router;
