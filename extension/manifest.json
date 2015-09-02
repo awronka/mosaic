@@ -2,30 +2,30 @@
 	"manifest_version": 2,
 	
 	"name": "Mosaic",
-	"description": "An extension that shows the DOM structure and their selectors to help with CSS manipulation",
+	"description": "Helping with front-end collaboration",
 	"version": "1.0",
 
 	"browser_action": {
 		"default_icon": {
-			"38": "images/38-inactive.png"
+			"48": "icons/48-inactive.png"
 		},
 		"default_title": "Reveal DOM"
 	},
 
-	"web_accessible_resources": [
-		"css/overlay.css"
-	],
+	"icons": { 
+		"128": "icons/128-active.png"
+	},
 
 	"content_scripts": [
 		{
 			"matches": ["*://*/*"],
-			"js": ["node_modules/jquery/dist/jquery.min.js"],
+			"js": ["lib/jquery.min.js"],
 			"run_at": "document_idle"
 		}
 	],
 
 	"background": {
-		"scripts": ["node_modules/jquery/dist/jquery.min.js", "browser/background.js"]
+		"scripts": ["lib/jquery.min.js", "functionality/background.js"]
 	},
 
 	"permissions": [

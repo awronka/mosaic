@@ -3,8 +3,8 @@ MOSAIC DATA
 -----------------*/
 var MOSAICDATA = {};
 
-var webServerUrl = "http://localhost:3333/"
-// var webServerUrl = "http://mosaic-extension.herokuapp.com/"
+// var webServerUrl = "http://localhost:3333/"
+var webServerUrl = "http://mosaic-extension.herokuapp.com/"
 
 var updatePageComments = function(tab){
 	if (!MOSAICDATA[tab.url]) MOSAICDATA[tab.url] = [];
@@ -22,11 +22,11 @@ TAB SWITCHING
 -----------------*/
 chrome.tabs.onActivated.addListener(function(event) {
 	// Change Icon
-	chrome.tabs.executeScript(event.id, {file: "browser/sense-state.js"}, function(result) {
+	chrome.tabs.executeScript(event.id, {file: "functionality/sense-state.js"}, function(result) {
 		// console.log('Mosaic Activate: ',result[0]); // Returns an array, in this case with a length of 1 because I specified the tab to inspect
-		if (result[0] === true) { chrome.browserAction.setIcon({path: "images/38-active.png"});
+		if (result[0] === true) { chrome.browserAction.setIcon({path: "../icons/48-active.png"});
 		} else {
-			chrome.browserAction.setIcon({path: "images/38-inactive.png"});
+			chrome.browserAction.setIcon({path: "../icons/48-inactive.png"});
 		}
 	});
 	chrome.tabs.get(event.tabId, function(tab) {
@@ -48,7 +48,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changedInfo, tab) {
 BROWSER ACTION
 -----------------*/
 chrome.browserAction.onClicked.addListener(function (tab) {
-	chrome.browserAction.setPopup({popup: 'browser/popup/popup.html'});	
+	chrome.browserAction.setPopup({popup: 'functionality/popup/popup.html'});	
 });
 
 /*---------------
@@ -81,17 +81,17 @@ chrome.runtime.onMessage.addListener(
 			// Run deactivating scripts
 			chrome.tabs.getCurrent(function(tab){
 				// Comments
-				chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"});
+				chrome.tabs.executeScript(tab, {file: "functionality/commenting/comment-visibility.js"});
 				// Grids
-				chrome.tabs.executeScript(tab, {file: "browser/revealers/set-mosaic-css.js"});
-				chrome.tabs.executeScript(tab, {file: "browser/revealers/event-outlines.js"});
-				chrome.tabs.executeScript(tab, {file: "browser/revealers/hover.js"});
-				chrome.tabs.executeScript(tab, {file: "browser/revealers/remove-name-flags.js"});
+				chrome.tabs.executeScript(tab, {file: "functionality/revealers/set-mosaic-css.js"});
+				chrome.tabs.executeScript(tab, {file: "functionality/revealers/event-outlines.js"});
+				chrome.tabs.executeScript(tab, {file: "functionality/revealers/hover.js"});
+				chrome.tabs.executeScript(tab, {file: "functionality/revealers/remove-name-flags.js"});
 				// Icon
-				chrome.tabs.executeScript(tab, {file: "browser/sense-state.js"}, function(result){
-					if (result[0]){ chrome.browserAction.setIcon({path: "images/38-active.png"});
+				chrome.tabs.executeScript(tab, {file: "functionality/sense-state.js"}, function(result){
+					if (result[0]){ chrome.browserAction.setIcon({path: "../icons/48-active.png"});
 					} else {
-						chrome.browserAction.setIcon({path: "images/38-inactive.png"});
+						chrome.browserAction.setIcon({path: "../icons/48-inactive.png"});
 					}
 				});
 				// Upon Success, Reply
@@ -125,7 +125,7 @@ chrome.runtime.onMessage.addListener(
 			// Get Current Tab
 			chrome.tabs.getCurrent(function(tab){
 				// Run Comment Visiblity Content-Script
-				chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"}, function(result){
+				chrome.tabs.executeScript(tab, {file: "functionality/commenting/comment-visibility.js"}, function(result){
 					sendResponse({status: "RECIEVED: Comments Visibility Changed", visibility: result});
 				});
 			});
@@ -145,7 +145,7 @@ chrome.runtime.onMessage.addListener(
 					console.log('COMMENTS DELETED: ', response);
 					chrome.tabs.getCurrent(function(tab){
 						// Run Comment Visiblity Content-Script
-						chrome.tabs.executeScript(tab, {file: "browser/commenting/comment-visibility.js"}, function(result){
+						chrome.tabs.executeScript(tab, {file: "functionality/commenting/comment-visibility.js"}, function(result){
 							sendResponse({status: "RECIEVED: Comments Visibility Changed", visibility: result});
 						});
 					});
