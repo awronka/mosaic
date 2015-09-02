@@ -14,5 +14,16 @@ app.use('/api', require('./routes'));
 
 
 /*-------------------
-Not serving HTML files, so we don't need static file routing or an HTML
+Serve index.html for default
 -------------------*/
+
+
+app.get('/*', function (req, res) {
+    res.sendFile(app.get('indexHTMLPath'));
+});
+
+// Error catching endware.
+app.use(function (err, req, res, next) {
+    console.error(err, typeof next);
+    res.status(err.status || 500).send(err.message || 'Internal server error.');
+});

@@ -3,12 +3,13 @@ MOSAIC DATA
 -----------------*/
 var MOSAICDATA = {};
 
-var dbUrl = "http://localhost:3333/"
+var webServerUrl = "http://localhost:3333/"
+// var webServerUrl = "http://mosaic-extension.herokuapp.com/"
 
 var updatePageComments = function(tab){
 	if (!MOSAICDATA[tab.url]) MOSAICDATA[tab.url] = [];
 	// Get Page
-	$.get(dbUrl + 'api/page', {url: tab.url})
+	$.get(webServerUrl + 'api/page', {url: tab.url})
 		.done(function(data) {
 			// console.log('RETURNED DATA: ', data);
 			MOSAICDATA[tab.url] = data.comments;
@@ -64,7 +65,7 @@ chrome.runtime.onMessage.addListener(
 			// Get Tab
 			chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
 				// Make Get
-				$.get(dbUrl + 'api/page', {url: tabs[0].url})
+				$.get(webServerUrl + 'api/page', {url: tabs[0].url})
 					.done(function(data) {
 						console.log('RETURNED DATA: ', data);
 						// Send Back Information
@@ -108,7 +109,7 @@ chrome.runtime.onMessage.addListener(
 					path = request.path,
 					input = request.input;
 
-				$.post(dbUrl + 'api/comment', {url: url, path: path, input: input})
+				$.post(webServerUrl + 'api/comment', {url: url, path: path, input: input})
 					.done(function(data){
 						console.log('COMMENT POSTED: ', data);
 					})
@@ -137,7 +138,7 @@ chrome.runtime.onMessage.addListener(
 			chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
 				var page = tabs[0].url;
 				$.ajax({
-					url: dbUrl + 'api/page/comments',
+					url: webServerUrl + 'api/page/comments',
 					type: 'DELETE',
 					data: {page: page}
 				}).done(function(response){

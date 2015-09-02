@@ -20,5 +20,6 @@ var logMiddleware = function (req, res, next) {
 module.exports = function (app) {
     app.setValue('env', env);
     app.setValue('projectRoot', rootPath);
+    app.setValue('indexHTMLPath', indexPath);
     app.setValue('log', logMiddleware);
 };
