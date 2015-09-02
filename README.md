@@ -7,11 +7,11 @@ Recently added were flags for javascript events and global commenting system so 
 
 ####Example:
 Rendered DOM Visibility
-![I love that blue!](/images/screenshot2.png)
+![I love that blue!](/screenshot2.png)
 Javascript Event Highlighting
-![Not as neat!](/images/screenshot3.png)
+![Not as neat!](/screenshot3.png)
 Comments (Work-in-progress)
-![Getting there!](/images/screenshot4.png)
+![Getting there!](/screenshot4.png)
 
 
 #### To Try it Out
