@@ -7,8 +7,19 @@
     "start": "nodemon --watch server -e js,html server/start.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/youmustfight/mosaic.git"
+  },
+  "bugs": {
+    "url": "http://github.com/youmustfight/mosaic/issues"
+  },
+  "author": {
+    "name": "Mark Hansen",
+    "email": "x@markthemark.com",
+    "url": "http://github.com/youmustfight"
+  },
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^2.9.34",
     "body-parser": "^1.13.3",

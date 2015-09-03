@@ -10,7 +10,7 @@ Rendered DOM Visibility
 ![I love that blue!](/screenshot2.png)
 Javascript Event Highlighting
 ![Not as neat!](/screenshot3.png)
-Comments (Work-in-progress)
+Comments (Work-in-Progress)
 ![Getting there!](/screenshot4.png)
 
 
