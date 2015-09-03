@@ -11,10 +11,12 @@ var updatePageComments = function(tab){
 	// Get Page
 	$.get(webServerUrl + 'api/page', {url: tab.url})
 		.done(function(data) {
-			// console.log('RETURNED DATA: ', data);
+			// RESET MOSAICDATA
+			MOSAICDATA = {};
+			// SET MOSAICDATA
 			MOSAICDATA[tab.url] = data.comments;
+			console.log('MOSAICDATA: ', MOSAICDATA);
 		})
-	console.log('MOSAICDATA: ', MOSAICDATA);
 }
 
 /*---------------
@@ -143,14 +145,11 @@ chrome.runtime.onMessage.addListener(
 					data: {page: page}
 				}).done(function(response){
 					console.log('COMMENTS DELETED: ', response);
-					chrome.tabs.getCurrent(function(tab){
-						// Run Comment Visiblity Content-Script
-						chrome.tabs.executeScript(tab, {file: "functionality/commenting/comment-visibility.js"}, function(result){
-							sendResponse({status: "RECIEVED: Comments Visibility Changed", visibility: result});
-						});
-					});
-				})
-				sendResponse({status: "RECIEVED: Comments Deleted"})
+				});
+				// Run Comment Visiblity Content-Script
+				chrome.tabs.executeScript(tabs[0].id, {file: "functionality/commenting/comment-visibility.js"}, function(result){
+					sendResponse({status: "RECIEVED: Comments Deleted - RECIEVED: Comments Visibility Changed", visibility: result});
+				});
 			});
 		}
 

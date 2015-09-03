@@ -68,7 +68,7 @@ $('body *').hover(
 							}
 						}
 						// Append Comment Div
-						var commentDiv = "<div class='MosaicDOMRevealerCommentFlag' style='top:" + offsetTop + "px;left:" + determineHorizontalPosition() + "px;'><h4>Comment</h4><ol></ol>";
+						var commentDiv = "<div class='MosaicDOMRevealerCommentFlag' style='top:" + offsetTop + "px;left:" + determineHorizontalPosition() + "px;'><ol></ol>";
 						var inputDiv = "<div class='MosaicDOMRevealerCommentInput'><input class='commentInput' type='text' placeholder='Leave a Comment' /><button class='commentSubmit' type='submit'>Submit</button></div></div>";
 						var fullSection = commentDiv+inputDiv;
 						$(e.target).prepend(fullSection);

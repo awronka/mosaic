@@ -41,13 +41,19 @@ body {
 MY STLES
 ------------------------------------------------*/
 body {
-	background-color: #004bff;
+	background-color: #ffffff;
 	color: #fff;
 	text-align: center;
+  cursor: crosshair;
 }
 .wrapper {
 	padding: 40px;
-	padding-top: 80px;
+	padding-top: 30px;
+}
+img {
+  width: 48px;
+  height: auto;
+  padding-bottom: 12px;
 }
 ul {
 	list-style: none;
@@ -59,6 +65,32 @@ a {
 	color: #bababa;
 	text-decoration: none;
 }
-button{
-
+h1 {
+  color: #222222;
+  text-transform: uppercase;
+}
+p {
+  color: #bbbbbb;
+  text-transform: uppercase;
+  font-size: 8px;
+  padding-top: 12px;
+  padding-bottom: 6px;
+}
+button {
+  background-color: white;
+  width: 120px;
+  padding: .5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  text-transform: uppercase;
+  border: none;
+  outline: 1px dashed rgba(30, 30, 200, .2); 
+  color: black;
+  font-family: Helvetica, Arial, Sans-Serif;
+}
+button:hover {
+  background-color: #222222;
+  color: white;
+  outline: none;
+  cursor: crosshair;
 }

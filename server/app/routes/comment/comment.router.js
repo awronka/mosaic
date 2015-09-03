@@ -7,21 +7,27 @@ var Comment = mongoose.model('Comment');
 /*---------------
 POST A COMMENT
 -----------------*/
-router.post('/', function (req, res, next) {
-	// Create Comment
-	Comment.create({path: req.body.path, comment: req.body.input})
-	.then(function(Comment) {
-		// Insert Comment ID into page's comment array
-		Page.findOneAndUpdate({url: req.body.url},{$addToSet: {comments: Comment._id}}).exec()
-		.then(function(UpdatedPage) {
-			// With page ID, update comment	
-			Comment.page = UpdatedPage._id;
-			Comment.findOneAndUpdate({_id: Comment._id}, Comment, {upsert: true}, function(err, comment){
-				if(err) return next(err);
-				res.json(comment);
-			});
-		});
-	})
+router.post('/', function (req, res, next) { // Create Comment
+
+	Page.findOne({url: req.body.url}, function(pageErr, foundPage) { // Find Page
+		console.log('FOUND PAGE: ', foundPage);
+
+		Comment.create({path: req.body.path, comment: req.body.input}, function (commentErr, createdComment){ // Create Comment
+			console.log('CREATED COMMENT: ', createdComment);
+
+			if (!foundPage) { // If page doesn't exist, create it with the comment id in its array
+				Page.create({url: req.body.url, comments: [createdComment._id]}, function (creationErr, newPage){
+					console.log('NEW PAGE: ', newPage);
+				});
+			} else { // If page exists, insert the comment
+				foundPage.comments.push(createdComment._id);
+				foundPage.save();
+			}
+
+			// Send back created Comment
+			res.json(createdComment);
+		})
+	});
 });
 
 module.exports = router;

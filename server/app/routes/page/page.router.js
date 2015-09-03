@@ -5,41 +5,28 @@ var Page = mongoose.model('Page');
 var Comment = mongoose.model('Comment');
 
 /*---------------
-GET or CREATE PAGE
+GET PAGE
 -----------------*/
-router.get('/', function (req, res, next) {	
-	Page.findOne({url: req.query.url}).exec() 	//Find a page with matching url
-	.then(function(doc){
-
-		if (doc){ // If the page exists, populate and send back
-			console.log('Page Exists');
-
-			Page.findOne({url: req.query.url}).populate({path: 'comments'}).exec(function (err, populatedDoc){
-				if (err) return next(err);
-				console.log('Populated Doc: ',populatedDoc);
-				res.send(populatedDoc);
-			});
-
-		} else { // If the page does not exist, create a new Page
-			console.log('Creating New Page');
-
-			Page.create({url: req.query.url})
-			.then(function(Page) {
-				console.log('Page Created');
-				res.send(Page);
-			});
-		}
+router.get('/', function (req, res, next) {
+	// Find a page, populate comments, and send back
+	Page.findOne({url: req.query.url}).populate({path: 'comments'}).exec(function (err, populatedPage){
+		if (err) return next(err);
+		console.log('Populated Doc: ', populatedPage);
+		res.send(populatedPage);
 	});
-
 });
 
 /*---------------
-DELETE PAGE COMMENTS
+DELETE COMMENTS DOCS AND CONNECTED PAGE DOC
 -----------------*/
 router.delete('/comments', function (req, res, next) {
-	Page.findOneAndUpdate({url: req.body.page}, {comments: []}, {upsert: true, 'new': true}).exec()
-	.then(function(Page){
-		res.send(Page);
+	// Delete comment and page documents
+	Page.findOne({url: req.body.page}, function(err, pageToDelete) {
+		if (pageToDelete){ // If page exists, remove comments
+			Comment.find({_id: { $in: pageToDelete.comments }}).remove().exec();
+			// Delete Page - Chaining remove to the end of the query doesn't remove the page for some reason
+			pageToDelete.remove(); 
+		}
 	});
 });
 

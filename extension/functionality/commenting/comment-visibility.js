@@ -21,12 +21,11 @@ LOAD COMMENTS
 	// Make a GET for comments and populate - do I send a message for current tab's info? Is it an updatePageComments call to the background.js?
 	// Upon getting info from background.js, we populate
 
-	// Get Page Comments
-	chrome.runtime.sendMessage({action: "getMosaicData"}, function(response){
+	chrome.runtime.sendMessage({action: "getMosaicData"}, function(response){	// Get Page Comments
 		// Parse Response Data
 		var comments = response.data.comments;
-		// For each response, append to DOM
-		$.each(comments, function(index, value) {
+
+		$.each(comments, function(index, value) {		// For each response, append to DOM
 			// Refine Selector
 			var selector = value.path.join(" ").replace(/div/g,"");
 			// Get Positioning
@@ -41,7 +40,7 @@ LOAD COMMENTS
 				}
 			}
 			// DIV Template
-			var commentDiv = "<div class='MosaicDOMRevealerCommentFlag' style='top:" + offsetTop + "px;left:" + determineHorizontalPosition() + "px;'><h4>Comment</h4><ol class='commentList'><li>" + value.comment + "</li></ol>";
+			var commentDiv = "<div class='MosaicDOMRevealerCommentFlag' style='top:" + offsetTop + "px;left:" + determineHorizontalPosition() + "px;'><ol class='commentList'><li>" + value.comment + "</li></ol>";
 			var inputDiv = "<div class='MosaicDOMRevealerCommentInput'><input class='commentInput' type='text' placeholder='Leave a Comment' /><button class='commentSubmit' type='submit'>Submit</button></div></div>";
 			var fullSection = commentDiv+inputDiv;
 		
