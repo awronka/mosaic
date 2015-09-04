@@ -55,25 +55,37 @@ if (style) {
 			outline: none; \
 			background-color: rgba(255, 255, 255, 1); \
 			box-shadow: 0px 4px 24px rgba(24, 24, 24, .2); \
-			color: black; \
-			font-size: 8px; \
-			font-weight: bold; \
+			font: none; \
 			text-align: left; \
-			font-family: Helvetica, Arial, Sans-Serif; \
-			line-height: 1.35; \
+			zoom: 1; \
 		}',
 		5);
 	style.sheet.insertRule(
 		'.MosaicDOMRevealerCommentFlag * { \
+			display: block; \
+			flex: none; \
 			margin: 0px; \
+			padding: 0px; \
+			border: 0px; \
 			outline: none; \
+			line-height: normal; \
+			font-size: 8px; \
+			font-weight: normal; \
+			font-family: Helvetica, Arial, Sans-Serif; \
+			text-transform: uppercase; \
+			font-smoothing: antialiased; \
+			color: black; \
+			opacity: 1; \
+			max-height: none; \
+			min-height: none; \
+			max-width: none; \
+			min-width: none; \
 		}',
 		6);
 	style.sheet.insertRule(
 		'.MosaicDOMRevealerCommentFlag ol { \
-			outline: none; \
-			padding: 0; \
-			padding-left: 16px; \
+			padding-left: 4px; \
+			list-style-type: none; \
 		}',
 		7);
 	style.sheet.insertRule(
@@ -83,34 +95,40 @@ if (style) {
 		}',
 		8);
 	style.sheet.insertRule(
-		'.MosaicDOMRevealerCommentFlag input { \
-			float: left; \
-			width: 146px; \
-			height: 14px; \
-			border: none; \
-			border-top: 1px dashed rgba(30,30,200,.2); \
-			padding-left: 4px; \
+		'*, :after, :before { \
+			box-sizing: initial;\
 		}',
 		9);
 	style.sheet.insertRule(
+		'.MosaicDOMRevealerCommentFlag input { \
+			float: left; \
+			width: 148px; \
+			max-width: 148px; \
+			height: 14px; \
+			border-top: 1px dashed rgba(30,30,200,.2); \
+			padding-left: 4px; \
+		}',
+		10);
+	style.sheet.insertRule(
 		'.MosaicDOMRevealerCommentFlag button { \
-			float: right; \
+			float: left; \
 			padding: 4px; \
 			padding-left: 8px; \
 			padding-right: 8px; \
+			margin: 0; \
+			margin-top: 1px; \
+			width: auto; \
+			height: 14px; \
+			text-align: center; \
 			background-color: white; \
-			outline: 1px dashed rgba(30,30,200,.2); \
-			border: none; \
-			text-transform: uppercase; \
-			color: black; \
+			outline: 1px dashed rgba(30, 30, 200, .2); \
 		}',
-		10);
+		11);
 	style.sheet.insertRule(
 		'.MosaicDOMRevealerCommentFlag button:hover { \
 			background-color: #222222; \
 			color: white; \
-			outline: none; \
 			cursor: crosshair; \
 		}',
-		11);
+		12);
 }

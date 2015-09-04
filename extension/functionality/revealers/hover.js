@@ -112,7 +112,7 @@ $('body *').hover(
 								$(e.target).parent().children('.commentInput').val('');
 
 								// Close input
-								// $(e.target).parent().hide();
+								$(e.target).parent().hide();
 							}
 						});
 					};

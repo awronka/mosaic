@@ -41,11 +41,9 @@ LOAD COMMENTS
 			}
 			// DIV Template
 			var commentDiv = "<div class='MosaicDOMRevealerCommentFlag' style='top:" + offsetTop + "px;left:" + determineHorizontalPosition() + "px;'><ol class='commentList'><li>" + value.comment + "</li></ol>";
-			var inputDiv = "<div class='MosaicDOMRevealerCommentInput'><input class='commentInput' type='text' placeholder='Leave a Comment' /><button class='commentSubmit' type='submit'>Submit</button></div></div>";
-			var fullSection = commentDiv+inputDiv;
-		
+					
 			// Attach
-			$(selector).prepend(fullSection);
+			$(selector).prepend(commentDiv);
 			// $(selector).children('.MosaicDomRevealerCommentFlag').children('ol').append("<li>" + value.comment + "</li>")
 		});
 		// Set visibility to true

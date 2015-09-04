@@ -3,8 +3,8 @@ MOSAIC DATA
 -----------------*/
 var MOSAICDATA = {};
 
-// var webServerUrl = "http://localhost:3333/"
-var webServerUrl = "http://mosaic-extension.herokuapp.com/"
+var webServerUrl = "http://localhost:3333/"
+// var webServerUrl = "http://mosaic-extension.herokuapp.com/"
 
 var updatePageComments = function(tab){
 	if (!MOSAICDATA[tab.url]) MOSAICDATA[tab.url] = [];
